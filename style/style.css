@@ -278,9 +278,9 @@ header{
 .offer-title{
     color: var(--luxury-gold);
 }
-.offer-box{
+/* .offer-box{
 
-}
+} */
                             /* الكود البديل */
 /* #Our-Offer{
     background-color: var(--text-gray);
@@ -475,9 +475,10 @@ footer p{
 }
 
 /* /////////////////////////////////////////////////////////////////////// */
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* ===================================================
-   Tablets (768px to 1024px)
+Tablets (768px to 1024px)
 ====================================================== */
 @media (max-width: 1024px) {
     nav { padding: 0 40px; }
@@ -486,8 +487,8 @@ footer p{
     .form-border { padding: 80px 100px; }
 }
 
-/* Mobile Devices */
-@media (max-width: 412px) { 
+@media (max-width: 768px) {
+
 /* ===============================
    Global
 =============================== */
@@ -501,6 +502,7 @@ body{
 nav{
     padding: 15px 20px;
     height: auto;
+    width: 100%;
 }
 
 nav ul{
@@ -514,27 +516,8 @@ nav ul li{
 }
 
 nav .nav-img{
-    width: 45px;
-    height: 45px;
-}
-
-/* ===============================
-   Header
-=============================== */
-header{
-    height: 100vh;
-    width: 100%;
-    position: relative;
-}
-
-.header-text{
-    font-size: 28px;
-    margin-bottom: 0;
-    padding: 0 15px;
-}
-
-.header-text p{
-    font-size: 18px;
+    width: 55px;
+    height: 55px;
 }
 
 .humburger{
@@ -586,6 +569,250 @@ header{
     display: block;
 }
 
+/* ===============================
+   Header
+=============================== */
+header{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+header .mobile-button{
+    display: block;
+    position: absolute;
+    bottom: 40px;
+}
+/* ===============================
+    Services Section
+=============================== */
+.services{
+    height: auto;
+    padding: 120px 0 60px;
+    width: 100%;
+}
+
+.services-title{
+    font-size: 50px;
+    top: 40px;
+}
+
+.services-content{
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.service-box{
+    width: 100%;
+    min-height: auto;
+    margin: 0 auto;
+}
+
+.service-box .img-box{
+    height: 200px;
+}
+
+.service-box h3{
+    font-size: 22px;
+}
+
+.service-box p{
+    font-size: 16px;
+}
+
+/* ===============================
+    Contact Us
+=============================== */
+.contact-us{
+    padding: 60px 0;
+    width: 100%;
+}
+
+.contact-us .contact-us-content{
+    margin-top: 80px;
+}
+
+.form-border{
+    padding: 40px 65px;
+    width: 100%;
+}
+
+.contact-us-content form{
+    width: 100%;        /* ⭐ مش 400px */
+    max-width: 100%;
+}
+
+.contact-us-content form input,
+.contact-us-content form textarea,
+.contact-us-content form button{
+    width: 100%;
+}
+
+/* ===============================
+    Our-Offer Section
+=============================== */
+
+.services .scroll-btn {
+    display: none;
+}
+
+#Our-Offer{
+    min-height: 10vh;
+}
+
+/* 1. الحاوية الكبرى: نلغي أي قيود قديمة */
+.slider-wrapper {
+    overflow: visible ; /* للسماح للحاوية الداخلية بالتحكم */
+    width: 100%;
+    margin: 0px;
+}
+
+/* 2. حاوية الكروت: المحرك الأساسي */
+#offersContainer {
+    display: flex ;   /* تأكيد الـ Flex */
+    flex-direction: row ; /* تأكيد الاتجاه الأفقي */
+    gap: 0 ;          /* إلغاء المسافات بين الكروت */
+    overflow-x: scroll ; /* تفعيل السكرول الإجباري */
+    scroll-snap-type: x mandatory ; /* تثبيت الكارت في المنتصف */
+    width: 100vw ;    /* العرض بكامل شاشة الموبايل */
+    padding: 0 ;
+    margin-left: -20px;         /* تعويض البادنج الخاص بالـ body إن وجد */
+    scrollbar-width: none;      /* إخفاء شريط التمرير */
+}
+
+/* 3. الكارت نفسه: يجب أن يكون بعرض الشاشة تماماً */
+.offer-box {
+    flex: 0 0 75% ;  /* إجبار الكارت على أخذ 100% من العرض */
+    width: 100% ;
+    scroll-snap-align: start ; /* الالتصاق ببداية الشاشة */
+    scroll-snap-stop: always ;
+    /* تأكد أن الكارت ليس له Margin جانبي */
+    margin: 0 10px; 
+}
+
+.service-box:hover{
+    transform: none; /* إلغاء التكبير على الموبايل */
+}
+
+/* ===============================
+    Footer
+=============================== */
+footer p{
+    font-size: 12px;
+}
+
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* Mobile Devices */
+
+@media (max-width: 412px) { 
+/* ===============================
+   Global
+=============================== */
+body{
+    height: auto;
+}
+
+/* ===============================
+    Navbar
+=============================== */
+nav{
+    padding: 15px 20px;
+    height: auto;
+}
+
+nav ul{
+    gap: 15px;
+    display: block;
+}
+
+nav ul li{
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+nav .nav-img{
+    width: 45px;
+    height: 45px;
+}
+
+.humburger{
+    display: block;
+    width: 45px;
+    height: 45px;
+    color: var(--luxury-gold);
+    font-size: 28px;
+    position: relative;
+}
+
+.humburger i{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: var(--main-transition);
+}
+
+.humburger i.fa-xmark {
+    display: none;
+}
+
+.humburger i.active{
+    opacity: 1;
+    display: block;
+}
+
+.navbar{
+    position: absolute;
+    background-color: var(--primary-black);
+    top: 75px;
+    left: 0;
+    width: 100%;
+    padding: 5px 20px;
+    /* opacity: 0; */
+    display: none;
+    text-align: center;
+    transition: var(--main-transition);
+}
+
+.navbar.active{
+    opacity: 1;
+    display: block;
+}
+
+
+/* ===============================
+   Header
+=============================== */
+header{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.header-text{
+    font-size: 28px;
+    margin-bottom: 0;
+    padding: 0 15px;
+}
+
+.header-text p{
+    font-size: 18px;
+}
+
+header .mobile-button{
+    display: block;
+    position: absolute;
+    bottom: 70px;
+}
 
 /* ===============================
     Services Section
