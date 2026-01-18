@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductsDetails</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tab-Logo -->
+    <link rel="icon" href="img/Logo2.png" type="image/png">
+    <!-- Styling -->
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'playfair display', serif;
+    background-color: var(--primary-black);
+}
+
+:root {
+  /* الألوان الأساسية */
+  --primary-black: #0A0A0A;    /* أسود عميق للخلفيات */
+  --luxury-gold: #D4AF37;      /* الذهبي الملكي للوجو والعناوين */
+  --light-gold: #F1D279;       /* ذهبي فاتح للتفاعل Hover effects */
+  --deep-gold: #996515;        /* ذهبي غامق للظلال أو الخطوط الرفيعة */
+  
+  /* ألوان النصوص */
+  --text-white: #FFFFFF;       /* أبيض ناصع للنصوص الأساسية على الخلفية السوداء */
+  --text-gray: #A0A0A0;        /* رمادي هادئ للنصوص الثانوية والوصف */
+  
+  /* ألوان الفورم (Form Elements) */
+  --input-bg: #1A1A1A;         /* أسود فاتح قليلاً لخلفية خانات الإدخال */
+  --input-border: #333333;     /* لون الحدود لخانات الإدخال */
+  
+  /* المسافات والحدود */
+  --main-transition: all 0.3s ease; /* سرعة التحول في الأزرار والروابط */
+  --secondary-transition: all 0.7s ease-in-out; /* سرعة التحول الثانوية */
+
+  --main-font: 'Almarai', serif; /* الخط الرئيسي للموقع */
+  --secondary-font: 'Tajawal', sans-serif; /* الخط الثانوي للموقع */
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+            /* Header */
+/* /////////////////////////////////////////////////////////////////////// */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 100px;
+    background-color: var(--primary-black);
+    height: 65px;
+    width: 100%;
+    z-index: 1000;
+    font-family: var(--secondary-font);
+    border-bottom: var(--luxury-gold) 1px solid;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+nav .nav-img{
+    height: 65px;
+    width: 65px;
+}
+
+nav .nav-img img{
+    height: 100%;
+    width: 100%;
+}
+
+nav ul{
+    display: flex;
+    gap: 40px;
+}
+
+nav ul li{
+    list-style: none;
+    color: var(--light-gold);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+
+nav ul a{
+    text-decoration: none;
+}
+
+nav ul li:hover{
+    color: var(--luxury-gold);
+}
+
+.humburger{
+    display: none;
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+.body-information{
+    display: flex; /* استخدام الفليكس لتقسيم المساحة بدقة */
+    flex-direction: row;
+    height: calc(100vh - 65px); /* طول الشاشة بدون الناف بار */
+    margin-top: 65px; /* إزاحة المحتوى لأسفل بمقدار ارتفاع الناف بار */
+    width: 100%;
+    background-color: var(--primary-black);
+    direction: rtl;
+    overflow: hidden; /* مهم جدًا */
+    font-family: var(--secondary-font);
+}
+.div-img{
+    background-image: url(./img/LabelBackground.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    width: 25%;
+    border-left: 1px solid var(--luxury-gold); /* فاصل جمالي بين القسمين */
+    position: sticky;
+    top: 65px; /* تحت الناف بار */
+}
+.div-img .img-logo{
+    position: absolute;
+    height: 250px;
+    width: 100%;
+    padding: 0px 90px;
+    margin: 100px auto;
+}
+.img-logo img{
+    height: 100%;
+    width: 100%;
+}
+.div-title{
+    position: absolute;
+    margin: 500px 0;
+    width: 100%;
+}
+.div-title h2{
+    color: var(--text-white);
+    font-size: 45px;
+    text-align: center;
+    background-color: var(--luxury-gold);
+    width: 90%;
+}
+/*---------------------------------------------------------*/
+.product-details{
+    background-color: var(--text-white);
+    height: 100vh;
+    width: 75%;
+    position: relative;
+    background-color: var(--text-white);
+    overflow-y: auto; /* هنا الاسكرول */
+}
+.product-content{
+    margin: 15px 30px;
+    position: relative;
+    display: flex;
+    direction: rtl;
+}
+.product-img{
+    width: 65%;
+    height: 350px;
+    border-radius: 15px;
+    border: 3px solid var(--luxury-gold);
+}
+.product-img img{
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+}
+.product-title{
+    width: 35%;
+    text-align: center;
+    padding: 25px 0px;
+}
+.product-title h3{
+    font-size: 45px;
+}
+.product-title h6{
+    font-size: 20px; 
+    margin-top: 15px;
+}
+.product-title p{
+    font-size: 20px;
+    margin-top: 35px;
+}
+/*---------------------------------------------------------*/
+.product-Additions{
+    margin: 15px 30px;
+    position: relative;
+    display: flex;
+    direction: rtl;
+    border-top: 1px solid var(--luxury-gold);
+}
+.product-description{
+    width: 65%;
+    height: auto;
+    padding: 15px 25px;
+}
+.product-description h3{
+    font-family: var(--secondary-font);
+    font-size: 32px;
+}
+.product-description p{
+    font-family: var(--main-font);
+    font-size: 22px;
+    line-height: 32px;
+}
+.product-informations{
+    width: 35%;
+    text-align: center;
+    padding: 25px 0px;
+}
+.product-informations .offer-dates{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin: 0 auto;
+}
+.offer-dates .start-date p,
+.offer-dates .end-date p{
+    color: var(--primary-black);
+    font-size: 25px;
+    font-weight: bold;
+}
+.offer-dates .start-date span
+,.offer-dates .end-date span{
+    display: block;
+    font-size: 20px;
+    color: var(--text-gray);
+}
+.product-informations .product-type{
+    min-height: 20%;
+    margin: 25% 0px 0px;
+    border: 2px solid var(--luxury-gold);
+    border-radius: 15px;
+}
+.product-type h3{
+    color: var(--primary-black);
+    font-size: 25px;
+    padding-bottom: 55px;
+    margin-top: 10px;
+}
+.product-type p{
+    color: var(--primary-black);
+    padding-bottom: 10px;
+    font-size: 25px;
+}
+.product-type i{
+    color: var(--primary-black);
+    padding-bottom: 10px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: var(--secondary-transition);
+    margin: 25px 10px;
+}
+.product-type i:hover{
+    color: var(--light-gold);
+}
+/*---------------------------------------------------------*/
+.product-gallery{
+    width: 100%;
+    padding: 40px 30px;
+    margin-bottom: 55px;
+    border-top: 1px solid var(--luxury-gold);
+}
+
+/* العنوان */
+.gallery-title{
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--primary-black);
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* خط ذهبي تحت العنوان */
+.gallery-title::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -8px;
+    width: 70px;
+    height: 3px;
+    background-color: var(--luxury-gold);
+}
+
+/* الجريد */
+.images-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* كارت الصورة */
+.image-card{
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+/* الصورة */
+.image-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+/* Hover Effect */
+.image-card:hover img{
+    transform: scale(1.1);
+}
+
+/* Overlay خفيف */
+.image-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.4),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.image-card:hover::after{
+    opacity: 1;
+}
+
+/* تحسين شكل صورة المنتج الرئيسية */
+#displayImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* تجعل الصورة تملأ الإطار مع الحفاظ على الأبعاد */
+    object-position: center;
+    border-radius: 12px;
+}
+
+/* إذا كنت تفضل أن تظهر الصورة كاملة حتى لو تركت فراغات جانبية استخدم contain */
+/* #displayImage { object-fit: contain; background-color: #f0f0f0; } */
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+    </style>
+</head>
+<body>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Navigation-bar -->
+    <nav>
+        <div class="nav-img">
+            <a href="Login.html">
+                <img src="img/Logo2.png" alt="">
+            </a>
+        </div>
+        <ul class="navbar">
+            <a href="index.html"><li>الرئيسية</li></a>
+            <a href="index.html#services"><li>خدمتنا</li></a>
+            <a href="index.html#Our-Offer"><li>عرضنا</li></a>
+            <a href="index.html#contact-us"><li>تواصل معنا</li></a>
+        </ul>
+
+        <div class="humburger">
+            <i class="fa-solid fa-bars active"></i>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </nav>
+    
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+
+<div class="body-information">
+    <div class="div-img">
+        <div class="img-logo">
+            <img id="mainImage" src="/img/Logo2.png" alt="">
+        </div>
+        <div class="div-title">
+            <h2 id="productGroup"></h2>
+        </div>
+    </div>
+    <div class="product-details">
+        <div class="product-content">
+            <div class="product-img">
+                <img id="displayImage" src="" alt="">
+            </div>
+            <div class="product-title">
+                <h3 id="productTitle"></h3>
+                <h6 id="productPrice"></h6>
+                <p>متاح: <span id="isAvailable"></span></p>
+            </div>
+        </div>
+        <div class="product-Additions">
+            <div class="product-description">
+                <h3>التفاصيل:</h3>
+                <p id="productDescription">جاري تحميل التفاصيل...</p>
+            </div>
+            <div class="product-informations">
+                <div class="offer-dates">
+                    <div class="start-date">
+                        <p>تاريخ بداية العرض</p>
+                        <span id="startDate"></span>
+                    </div>
+                    <div class="end-date">
+                        <p>تاريخ نهاية العرض</p>
+                        <span id="endDate"></span>
+                    </div>
+                </div>
+                <div class="product-type">
+                    <h3 id="productStatus"></h3>
+                    <p>تواصل معنا</p>
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <i class="fa-solid fa-comment"></i>
+                    <i class="fa-brands fa-facebook"></i>
+                </div>
+            </div>
+        </div>
+        <div class="product-gallery">
+            <h3 class="gallery-title">صور عن تفاصيل المنتج</h3>
+            <div class="images-grid" id="imageGallery">
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Scrpit -->
+    <script>
+        
+// 1. ضع رابط الـ Web App الخاص بك هنا
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzqRLJLuIIUOf5utsujSDbZoaA8IfeL4DWzk8mfZs_eD9IfFOG74r20zUH0GSISvyYeow/exec'; 
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // 2. استخراج الـ ID من رابط الصفحة (مثلاً: ProductsDetails.html?id=123)
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    // التأكد من وجود ID في الرابط
+    if (!productId) {
+        alert("خطأ: لم يتم تحديد معرف المنتج.");
+        window.location.href = "ProductsMenu.html"; // إعادة توجيه للمنيو
+        return;
+    }
+
+    try {
+        // 3. الاتصال بـ Google Apps Script لجلب البيانات
+        // نستخدم fetch مع المعاملات المطلوبة للسكربت الخاص بك
+        const response = await fetch(`${GAS_URL}?action=list&type=projects`);
+        
+        if (!response.ok) throw new Error("فشل الاتصال بالسيرفر");
+
+        const data = await response.json();
+        
+        // 4. البحث عن المنتج المطابق للـ ID داخل المصفوفة
+        const item = data.find(p => String(p.id) === String(productId));
+
+        if (item) {
+            renderProductDetails(item);
+        } else {
+            document.body.innerHTML = `
+                <div style="height:100vh; display:flex; justify-content:center; align-items:center; background:#0A0A0A; color:white; font-family:sans-serif;">
+                    <h1>عذراً، المنتج غير موجود أو تم حذفه.</h1>
+                </div>`;
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("حدث خطأ أثناء تحميل بيانات المنتج.");
+    }
+});
+
+function renderProductDetails(item) {
+    // 1. Product-Group (نوع العقار)
+    const groupElement = document.getElementById('productGroup');
+    if (groupElement) groupElement.innerText = item.property_type || "عرض عقاري";
+
+    // 2. Product-Title (العنوان)
+    const titleElement = document.getElementById('productTitle');
+    if (titleElement) titleElement.innerText = item.title || "بدون عنوان";
+
+    // 3. Product-Price (السعر)
+    const priceElement = document.getElementById('productPrice');
+    if (priceElement) priceElement.innerText = `${item.price || 0} ج.م`;
+
+    // 4. متاح (نعم / لأ)
+    const availableSpan = document.getElementById('isAvailable');
+    if (availableSpan) {
+        const isForSale = String(item.for_sale).toLowerCase();
+        availableSpan.innerText = (isForSale === 'true' || isForSale === '1' || isForSale === 'نعم') ? "نعم" : "لأ";
+    }
+
+    // 5. التواريخ
+    if (document.getElementById('startDate')) document.getElementById('startDate').innerText = item.start_date || "---";
+    if (document.getElementById('endDate')) document.getElementById('endDate').innerText = item.end_date || "---";
+
+    // 6. صورة المنتج فقط (تم إلغاء تغيير mainImage بناءً على طلبك)
+    if (item.main_image) {
+        const displayImg = document.getElementById('displayImage');
+        if (displayImg) displayImg.src = item.main_image;
+    }
+
+    // 7. التفاصيل (الوصف)
+    if (document.getElementById('productDescription')) {
+        document.getElementById('productDescription').innerText = item.description || "لا توجد تفاصيل إضافية.";
+    }
+
+    // 8. الحالة (Status)
+    if (document.getElementById('productStatus')) {
+        document.getElementById('productStatus').innerText = item.status || "شقق تمليك";
+    }
+
+    // 9. معرض الصور
+    const galleryContainer = document.getElementById('imageGallery');
+    if (galleryContainer) {
+        galleryContainer.innerHTML = ''; 
+        for (let i = 1; i <= 6; i++) {
+            const imgSrc = item[`image${i}`];
+            if (imgSrc && imgSrc.trim() !== "") {
+                const card = `
+                    <div class="image-card">
+                        <img src="${imgSrc}" alt="تفاصيل المنتج ${i}" onclick="window.open('${imgSrc}', '_blank')" style="width:100%; height:200px; object-fit:cover;">
+                    </div>
+                `;
+                galleryContainer.innerHTML += card;
+            }
+        }
+    }
+}
+
+    </script>
+</body>
+</html>

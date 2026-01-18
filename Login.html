@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginPage</title>
+    <!-- STYLING -->
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/all.css">
+    <!-- Tab-Logo -->
+    <link rel="icon" href="img/Logo2.png" type="image/png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* Default Code */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'playfair display', sans-serif;
+    background-color: var(--primary-black);
+    background-image: url(./img/LoginScreenBackground.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: border-box;
+}
+
+.container{
+    width: 80%;
+    height: 800px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:root {
+    /* الألوان الأساسية */
+    --primary-black: #0A0A0A;    /* أسود عميق للخلفيات */
+    --luxury-gold: #D4AF37;      /* الذهبي الملكي للوجو والعناوين */
+    --light-gold: #F1D279;       /* ذهبي فاتح للتفاعل Hover effects */
+    --deep-gold: #996515;        /* ذهبي غامق للظلال أو الخطوط الرفيعة */
+    
+    /* ألوان النصوص */
+    --text-white: #FFFFFF;       /* أبيض ناصع للنصوص الأساسية على الخلفية السوداء */
+    --text-gray: #A0A0A0;        /* رمادي هادئ للنصوص الثانوية والوصف */
+  
+    /* ألوان الفورم (Form Elements) */
+    --input-bg: #1A1A1A;         /* أسود فاتح قليلاً لخلفية خانات الإدخال */
+    --input-border: #333333;     /* لون الحدود لخانات الإدخال */
+    
+    /* المسافات والحدود */
+    --main-transition: all 0.3s ease; /* سرعة التحول في الأزرار والروابط */
+    --secondary-transition: all 0.7s ease-in-out; /* سرعة التحول الثانوية */
+    
+    --main-font: 'Almarai', serif; /* الخط الرئيسي للموقع */
+    --secondary-font: 'Tajawal', sans-serif; /* الخط الثانوي للموقع */
+}
+/* /////////////////////////////////////////////////////////////////////// */
+
+.img-box{
+    width: 250px;
+    height: 250px;
+    margin: 100px auto 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-box img{
+    width: 100%;
+    height: 100%;
+}
+
+.login-box{
+    width: 55%;
+    height: 500px;
+    background-color: var(--primary-black);
+    border: 2px solid var(--luxury-gold);
+    padding: 40px 0px 20px 0px;
+    margin: 0 auto;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.6);
+    border-radius: 10px;
+    position: relative;
+}
+
+.login-box form{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+.login-box form h2{
+    color: var(--luxury-gold);
+    text-align: center;
+    font-family: var(--main-font);
+    position: absolute;
+    top: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.login-box .input-box{
+    position: relative;
+    margin: 10px auto;
+    width: 100%;
+    color: var(--text-white);
+}
+
+.login-box .input-box input{
+    width: 70%;
+    padding: 10px 2px 0px;
+    font-size: 20px;
+    color: var(--luxury-gold);
+    font-weight: 700;
+    margin: 0 auto 30px;
+    border: none;
+    border-bottom: 2px solid var(--text-gray);
+    outline: none;
+    background: transparent;
+    font-family: var(--secondary-font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+}
+
+#togglePassword {
+    transition: color 0.3s ease;
+}
+
+#togglePassword:hover {
+    color: var(--text-white);
+}
+
+.login-box .input-box input:focus{
+    outline: none;
+    border-color:  #D4AF37; /* ذهبي */
+    box-shadow: 0 0 8px var(--luxury-gold);
+}
+
+.login-box button{
+    width: 20%;
+    padding: 10px 0;
+    font-size: 25px;
+    color: var(--text-white);
+    font-weight: 700;
+    margin: 100px auto 0;
+    border: none;
+    outline: none;
+    background-color: var(--luxury-gold);
+    cursor: pointer;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: var(--main-transition);
+}
+
+.login-box button:hover{
+    background-color: var(--light-gold);
+    color: var(--primary-black);
+}   
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* Large Screens */
+@media (min-width: 1280px) {
+
+}
+
+/* Laptops */
+@media (min-width: 1024px) { 
+
+}
+
+/* Tablets */
+@media (min-width: 768px) { 
+
+}
+
+/* Mobile Devices */
+@media (max-width: 412px) { 
+/* ===============================
+   Global
+=============================== */
+body{
+    height: auto;
+    background-repeat: repeat;
+}
+
+.img-box{
+    width: 100px;
+    height: 100px;
+}
+
+.login-box{
+    width: 85%;
+}
+
+.login-box form h2{
+    font-size: 30px;
+    width: 100%;
+}
+
+.login-box .input-box input{
+    text-align: center;
+    width: 85%;
+}
+
+.login-box button{
+    width: 50%;
+    font-size: 25px;
+}
+
+.input-box i {
+    right: 3px;
+}
+
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* /////////////////////////////////////////////////////////////////////// */
+</style>
+</head>
+<body>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Navigation-bar -->
+    <nav>
+        <div class="nav-img">
+            <a href="index.html">
+                <img src="img/Logo2.png" alt="">
+            </a>
+        </div>
+        <ul class="navbar">
+            <a href="index.html"><li>الرئيسية</li></a>
+            <a href="index.html?#Services"><li>خدمتنا</li></a>
+            <a href="index.html?#Our-Offer"><li>عرضنا</li></a>
+            <a href="index.html?#contact-us"><li>تواصل معنا</li></a>
+        </ul>
+
+        <div class="humburger">
+            <i class="fa-solid fa-bars active"></i>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </nav>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <div class="img-box">
+        <img src="/img/Logo2.png" alt="">
+    </div>
+    <div class="login-box">
+        <form>
+            <h2>تسجيل دخول</h2>
+            <div class="input-box">
+                <input type="text" required placeholder="اسم المستخدم">
+            </div>
+            <div class="input-box">
+                <input type="password" id="passwordInput" required placeholder="كلمة المرور">
+                <i class="fas fa-eye" id="togglePassword" 
+                style="position: absolute; left: 120px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--luxury-gold);"></i>
+            </div>
+            <button type="submit">تسجيل</button>
+        </form>
+    </div>
+    <div id="errorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+        <div style="background:var(--input-bg); border:2px solid var(--luxury-gold); padding:30px; border-radius:10px; text-align:center; min-width:300px;">
+            <i class="fas fa-exclamation-triangle" style="color:var(--luxury-gold); font-size:40px; margin-bottom:15px;"></i>
+            <h3 style="color:var(--text-white); font-family:var(--main-font); margin-bottom:20px;">خطأ في البيانات</h3>
+            <p style="color:var(--text-gray); font-family:var(--secondary-font); margin-bottom:20px;">Invalid username or password</p>
+            <button onclick="document.getElementById('errorModal').style.display='none'" style="background:var(--luxury-gold); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold;">إغلاق</button>
+        </div>
+    </div>
+    
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    
+    <script>
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzqRLJLuIIUOf5utsujSDbZoaA8IfeL4DWzk8mfZs_eD9IfFOG74r20zUH0GSISvyYeow/exec'; // ضع هنا رابط الـ Web App (exec)
+        
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+    // الحصول على القيم من المدخلات
+    const usernameInput = document.querySelectorAll('input')[0].value.trim();
+    const passwordInput = document.querySelectorAll('input')[1].value.trim();
+    const submitBtn = document.querySelector('button');
+
+    // تغيير شكل الزر أثناء التحميل
+    submitBtn.textContent = "جاري التحقق...";
+    submitBtn.disabled = true;
+
+    try {
+        // جلب قائمة المستخدمين من الشيت
+        const response = await fetch(`${GAS_URL}?action=list&type=users`);
+        const users = await response.json();
+
+        // البحث عن المستخدم (يجب أن تتطابق الأعمدة مع أسماء الأعمدة في الشيت: username و password)
+        const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
+
+        if (user) {
+            // نجاح الدخول: تخزين اسم المستخدم في الـ Session (اختياري) والتوجه للـ Dashboard
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('userName', user.full_name);
+            window.location.href = 'Dashboard.html';
+        } else {
+            // فشل الدخول: إظهار المودال
+            showError();
+        }
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("حدث خطأ في الاتصال بالسيرفر");
+    } finally {
+        submitBtn.textContent = "تسجيل";
+        submitBtn.disabled = false;
+    }
+});
+
+function showError() {
+    const modal = document.getElementById('errorModal');
+    modal.style.display = 'flex';
+}
+
+//if(sessionStorage.getItem('isLoggedIn') !== 'true') { window.location.href = 'Login.html'; }
+
+
+///////////////////////////////////////////////// Pasword Apear-Hide
+
+const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#passwordInput');
+
+    togglePassword.addEventListener('click', function (e) {
+        // تبديل نوع المدخل بين password و text
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        
+        // تبديل شكل الأيقونة
+        this.classList.toggle('fa-eye-slash');
+        this.classList.toggle('fa-eye');
+    });
+
+    
+const navbar = document.querySelector('.navbar');
+const bars = document.querySelector('.fa-bars');
+const xmark = document.querySelector('.fa-xmark');
+const humburgerMenu = document.querySelector('.humburger');
+
+humburgerMenu.addEventListener('click', () => {
+    navbar.classList.toggle('active');
+    xmark.classList.toggle('active');
+    bars.classList.toggle('active');
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+    </script>
+</body>
+</html>

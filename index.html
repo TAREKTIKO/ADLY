@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADLY REALESTATE</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tab-Logo -->
+    <link rel="icon" href="img/Logo2.png" type="image/png">
+    <!-- Searching tag-name -->
+    <meta name="description" content="عدلي للعقارات – شراء وبيع وتأجير العقارات بأفضل الأسعار في مصر. نوفر لك أفضل الفرص العقارية بسهولة وأمان.">
+    <meta name="keywords" content="عقارات, شراء عقار, بيع عقار, تأجير عقار, شقق, فلل, عقارات مصر">
+    <meta name="author" content="Adly Real Estate">
+</head>
+<body>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Navigation-bar -->
+    <nav>
+        <div class="nav-img">
+            <a href="Login.html">
+                <img src="img/Logo2.png" alt="">
+            </a>
+        </div>
+        <ul class="navbar">
+            <a href="#"><li>الرئيسية</li></a>
+            <a href="#services"><li>خدمتنا</li></a>
+            <a href="#Our-Offer"><li>عرضنا</li></a>
+            <a href="#contact-us"><li>تواصل معنا</li></a>
+        </ul>
+
+        <div class="humburger">
+            <i class="fa-solid fa-bars active"></i>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </nav>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Header -->
+    <header>
+        <div class="header-text">
+            <h1>عدلي للعقرات</h1>
+            <p>ابحث عن ما تريد بأفضل سعر</p>
+        </div>
+        <div class="mobile-button">
+            <a href="#services">
+                استكشف الآن
+            </a>
+        </div>
+    </header>
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Services section -->
+    <section class="services" id="services">
+            <h2 class="services-title">خدمتنا</h2>
+            <div class="services-content">
+                <div class="service-box">
+                    <div class="img-box">
+                        <img src="img/home1.png" alt="">
+                    </div>
+                    <h3>شراء عقار</h3>
+                    <p>نساعدك في العثور على العقار المثالي الذي يلبي احتياجاتك ورغباتك.</p>
+                    <a href="ProductsMenu.html?type=شراء">اطلع علي العرض</a>
+                </div>
+                <div class="service-box">
+                    <div class="img-box">
+                        <img src="img/home2.png" alt="">
+                    </div>
+                    <h3>بيع عقار</h3>
+                    <p>نقدم لك خدمات تسويق وبيع عقارك بأفضل الأسعار وبأسرع وقت ممكن.</p>
+                    <a href="ProductsMenu.html?type=بيع">اطلع علي العرض</a>
+                </div>
+                <div class="service-box">
+                    <div class="img-box">
+                        <img src="img/home3.png" alt="">
+                    </div>
+                    <h3>تأجير عقار</h3>
+                    <p>نوفر لك خيارات واسعة من العقارات للإيجار تناسب ميزانيتك واحتياجاتك.</p>
+                    <a href="ProductsMenu.html?type=تأجير">اطلع علي العرض</a>
+                </div>
+            </div>
+    </section> <!-- /services-section -->
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Our-Offer section -->
+        <section class="services" id="Our-Offer">
+        <h2 class="services-title offer-title">عروضنا الخاصة</h2>
+    
+        <div class="slider-wrapper">
+            <button class="scroll-btn left" onclick="scrollOffers('left')">
+            <i class="fas fa-chevron-left"></i>
+            </button>
+        
+            <div class="services-content" id="offersContainer">
+            </div>
+
+            <button class="scroll-btn right" onclick="scrollOffers('right')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section> <!-- /Our-Offer-section -->
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- contact-us section -->
+    <section class="services contact-us" id="contact-us">
+    <h2 class="services-title contact-us-title">تواصل معنا</h2>
+    <div class="services-content contact-us-content">
+        <div class="form-border">
+            <form id="contactForm">
+                <input type="text" id="userName" placeholder="الاسم الكامل" required>
+                <input type="tel" id="userPhone" placeholder="رقم الهاتف" required dir="rtl">
+                <textarea id="userMessage" placeholder="طلبك" required></textarea>
+                <button type="submit" id="submitBtn">ارسال</button>
+            </form>
+            <p id="successMsg" style="color: var(--luxury-gold); display: none; margin-top: 20px; font-weight: bold;">تم إرسال رسالتك بنجاح، سنتواصل معك قريباً.</p>
+        </div>
+    </div>
+    </section> <!-- /contact-us section -->
+    <!-- /////////////////////////////////////////////////////////////////////// -->
+    <!-- Footer -->
+     <footer>
+        <p>جميع الحقوق محفوظة &copy; عدلي للعقارات 2026</p>
+        <p>Designed & Developed By | TAREK AHMED</p>
+     </footer>
+     <script src="./script.js"></script>
+</body>
+</html>

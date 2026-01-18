@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Tab-Logo -->
+    <link rel="icon" href="img/Logo2.png" type="image/png">
+  <style>
+    :root {
+      --primary-black: #0A0A0A;
+      --luxury-gold: #D4AF37;
+      --light-gold: #F1D279;
+      --deep-gold: #996515;
+      --text-white: #FFFFFF;
+      --text-gray: #A0A0A0;
+      --input-bg: #1A1A1A;
+      --input-border: #333333;
+      --main-transition: all 0.3s ease;
+      --secondary-transition: all 0.7s ease-in-out;
+      --main-font: 'Almarai', serif;
+      --secondary-font: 'Tajawal', sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:var(--primary-black);color:var(--text-white);font-family:var(--main-font);display:flex;gap:20px}
+    aside{width:280px;background:#070707;padding:20px;border-right:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:16px}
+    .logo{font-weight:700;color:var(--luxury-gold);font-size:20px;text-align:center}
+    nav a{display:block;padding:12px;border-radius:8px;text-decoration:none;color:var(--text-white);transition:var(--main-transition)}
+    nav a:hover{background:rgba(255,255,255,0.03)}
+    nav a.active{background:linear-gradient(90deg, rgba(212,175,55,0.08), rgba(241,210,121,0.03));color:var(--light-gold)}
+    main{flex:1;padding:28px;overflow:auto}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    header h1{font-family:var(--secondary-font);margin:0}
+    .card{background:#0f0f0f;padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    table{width:100%;border-collapse:collapse}
+    table th, table td{padding:10px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.03);font-family:var(--secondary-font);color:var(--text-gray)}
+    .actions button{margin-left:8px}
+    .btn{background:var(--luxury-gold);color:var(--primary-black);border:none;padding:8px 12px;border-radius:8px;cursor:pointer;transition:var(--main-transition)}
+    .btn.secondary{background:transparent;color:var(--text-white);border:1px solid rgba(255,255,255,0.04)}
+    form{display:flex;flex-direction:column;gap:10px}
+    input, textarea, select{background:var(--input-bg);border:1px solid var(--input-border);padding:10px;border-radius:8px;color:var(--text-white);font-family:var(--secondary-font)}
+    .video-bg{position:relative;height:60vh;border-radius:12px;overflow:hidden}
+    .video-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+    .video-bg .overlay{position:relative;padding:24px}
+    .thumb{width:80px;height:60px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.04)}
+    .row-flex{display:flex;gap:8px}
+
+    /* new styles for upload UI */
+    .browse-btn{
+      display:inline-block;
+      margin-left:8px;
+      padding:6px 10px;
+      border-radius:8px;
+      border:none;
+      background:transparent;
+      color:var(--text-white);
+      cursor:pointer;
+      font-family:var(--secondary-font);
+      border:1px solid rgba(255,255,255,0.04);
+    }
+    .preview { width:80px;height:60px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.04);margin-left:8px; }
+    .uploading { opacity:0.6; transform:scale(0.98); }
+
+    @media(max-width:900px){aside{display:none}body{padding:12px}}
+
+    /* ===== responsive modal ===== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px; /* margin from viewport edges on small screens */
+    }
+
+    /* hide when aria-hidden=true (JS toggles this) */
+    .modal[aria-hidden="true"]{ display:none; }
+
+    .modal-content {
+      background: #0b0b0b;
+      width: 100%;
+      max-width: 880px;
+      border-radius: 12px;
+      padding: 18px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+
+      /* ensure it never exceeds viewport height */
+      max-height: calc(100vh - 40px); /* leave 20px gap top/bottom */
+      overflow-y: auto; /* enable internal scroll when needed */
+      -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    }
+
+    @media (max-width: 520px) {
+      .modal-content { padding: 14px; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="logo">لوحة التحكم</div>
+    <nav>
+      <a href="#" class="nav-link active" data-target="dashboard">الرئيسية</a>
+      <a href="#" class="nav-link" data-target="projects">إدارة المشروع</a>
+      <a href="#" class="nav-link" data-target="users">إدارة المستخدمين</a>
+      <a href="#" class="nav-link" data-target="offers">إدارة العروض</a>
+      <a href="#" class="nav-link" data-target="messages">الرسائل الواردة</a>
+      <a href="#" class="nav-link" data-target="logout">خروج</a>
+    </nav>
+    <div style="margin-top:auto;color:var(--text-gray);font-size:13px">تم تصميم هذه القائمة لإدخال الي قاعدة البينات لإظهارها الي المستخدمين</div>
+  </aside>
+
+  <main>
+    <header>
+      <h1 id="page-title">الرئيسية</h1>
+      <div>
+        <button class="btn" id="refreshBtn">تحديث</button>
+      </div>
+    </header>
+
+    <section id="dashboard" class="panel">
+      <div class="video-bg card">
+        <video src="/img/BackgroundVideo.mp4" id="bgVideo" autoplay muted loop playsinline></video>
+        <div class="overlay">
+          <h2 style="color:var(--luxury-gold);font-family:var(--secondary-font);text-align:center;">مرحباً بك في لوحة التحكم</h2>
+          <p style="color:var(--text-gray)"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="panel" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3>المشروعات</h3>
+          <div>
+            <button class="btn" id="addProjectBtn">إضافة مشروع جديد</button>
+          </div>
+        </div>
+        <div id="projectsTableWrap"></div>
+      </div>
+    </section>
+
+    <section id="users" class="panel" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3>المستخدمين</h3>
+          <div>
+            <button class="btn" id="addUserBtn">إضافة مستخدم</button>
+          </div>
+        </div>
+        <div id="usersTableWrap"></div>
+      </div>
+    </section>
+
+    <section id="offers" class="panel" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3>العروض</h3>
+          <div>
+            <button class="btn" id="addOfferBtn">إضافة عرض جديد</button>
+          </div>
+        </div>
+        <div id="offersTableWrap"></div>
+      </div>
+    </section>
+
+    <section id="messages" class="panel" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3>الرسائل الواردة من الموقع</h3>
+        </div>
+        <div id="messagesTableWrap" style="overflow-x: auto;">
+          <p style="text-align:center; color:var(--luxury-gold);">جاري تحميل الرسائل...</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="logout" class="panel" style="display:none">
+      <div class="card">
+        <h3>خروج</h3>
+        <p>اضغط الزر للعودة للصفحة الرئيسية.</p>
+        <a id="homeLink" class="btn secondary" href="index.html" style="background-color: var(--luxury-gold); font-weight: bold; text-decoration: none;">العودة للصفحة الرئيسية</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal (updated responsive version) -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle" style="margin-top:0;color:var(--luxury-gold)">عنوان</h3>
+      <div id="modalBody"></div>
+      <div style="display:flex;justify-content:flex-start;gap:10px;margin-top:12px;flex-shrink:0">
+        <button class="btn" id="modalSaveBtn">حفظ</button>
+        <button class="btn secondary" id="modalCancelBtn">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzqRLJLuIIUOf5utsujSDbZoaA8IfeL4DWzk8mfZs_eD9IfFOG74r20zUH0GSISvyYeow/exec'; // paste your Apps Script Web App URL here
+    const useLocalFallback = !GAS_URL;
+
+    if(sessionStorage.getItem('isLoggedIn') !== 'true') { window.location.href = 'Login.html'; }
+
+    function nowStr(){ return new Date().toLocaleString('ar-EG'); }
+
+    // Router
+    document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
+      a.classList.add('active');
+      const t = a.dataset.target;
+      document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
+      document.getElementById(t).style.display='block';
+      document.getElementById('page-title').textContent = a.textContent.trim();
+      if(t==='projects') loadProjects();
+      if(t==='users') loadUsers();
+      if(t==='offers') loadOffers();
+    }));
+
+    document.getElementById('refreshBtn').addEventListener('click', ()=>{
+      const active = document.querySelector('.nav-link.active').dataset.target;
+      if(active==='projects') loadProjects();
+      if(active==='users') loadUsers();
+      if(active==='offers') loadOffers();
+    });
+
+    // ===== Modal helpers (updated) =====
+    function openModal(title, innerHTML, onSave){
+      const modal = document.getElementById('modal');
+      const modalContent = modal.querySelector('.modal-content');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalBody').innerHTML = innerHTML;
+
+      // show
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+
+      // prevent background scroll
+      document.body.style.overflow = 'hidden';
+
+      // initialize behaviors
+      initFormBehaviors();
+
+      const saveBtn = document.getElementById('modalSaveBtn');
+      const cancelBtn = document.getElementById('modalCancelBtn');
+
+      // remove previous handlers
+      saveBtn.onclick = null;
+      cancelBtn.onclick = null;
+
+      saveBtn.onclick = ()=>{ try{ onSave(); }catch(e){ console.error(e); } closeModal(); };
+      cancelBtn.onclick = closeModal;
+
+      // close on overlay click (only when clicking outside content)
+      modal.addEventListener('click', handleOverlayClick);
+
+      // close on ESC
+      document.addEventListener('keydown', handleModalKeydown);
+
+      // reset scroll position inside modal content
+      modalContent.scrollTop = 0;
+
+      // focus first input if exists
+      const firstInput = modalContent.querySelector('input,select,textarea,button');
+      if(firstInput) firstInput.focus();
+    }
+
+    function closeModal(){
+      const modal = document.getElementById('modal');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+
+      // restore background scroll
+      document.body.style.overflow = '';
+
+      // clean listeners
+      modal.removeEventListener('click', handleOverlayClick);
+      document.removeEventListener('keydown', handleModalKeydown);
+    }
+
+    function handleOverlayClick(e){
+      const modal = document.getElementById('modal');
+      const content = modal.querySelector('.modal-content');
+      if(e.target === modal){ // clicked on overlay
+        closeModal();
+      }
+    }
+
+    function handleModalKeydown(e){
+      if(e.key === 'Escape' || e.key === 'Esc'){
+        const modal = document.getElementById('modal');
+        if(modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
+      }
+    }
+
+    async function api(action, type, data){
+        // ensure GAS_URL is set
+  if(!GAS_URL){
+    // local fallback (existing behavior)
+    return localApi(action, type, data);
+  }
+
+  // LIST uses GET (easier — no body)
+  if(action === 'list'){
+    const q = `${GAS_URL}?action=list&type=${encodeURIComponent(type)}`;
+    try{
+      const res = await fetch(q, { method: 'GET', cache: 'no-store' });
+      const j = await res.json();
+      return j;
+    }catch(err){
+      console.error('API list error', err);
+      return [];
+    }
+  }
+
+  // For create/update/delete use POST but avoid preflight by using text/plain content-type
+  const payload = { action, type, data };
+  try{
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      // Important: use a simple content-type to avoid CORS preflight
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify(payload)
+    });
+
+    // note: Apps Script returns JSON text
+    const j = await res.json();
+    return j;
+  }catch(err){
+    console.error('API post error', err);
+    return { ok: false, error: err.message || String(err) };
+  }
+    }
+
+    function localApi(action, type, data){
+      const key = 'demo_'+type;
+      const curr = JSON.parse(localStorage.getItem(key) || '[]');
+      if(action==='list') return Promise.resolve(curr);
+      if(action==='create'){ data.id = ''+Date.now(); curr.push(data); localStorage.setItem(key, JSON.stringify(curr)); return Promise.resolve({ok:true,inserted:data}); }
+      if(action==='update'){ const idx = curr.findIndex(x=>''+x.id==''+data.id); if(idx>-1){ curr[idx] = {...curr[idx],...data}; localStorage.setItem(key, JSON.stringify(curr)); return Promise.resolve({ok:true,updated:data}); } return Promise.resolve({ok:false}); }
+      if(action==='delete'){ const idx = curr.findIndex(x=>''+x.id==''+data.id); if(idx>-1){ curr.splice(idx,1); localStorage.setItem(key, JSON.stringify(curr)); return Promise.resolve({ok:true,deletedId:data.id}); } return Promise.resolve({ok:false}); }
+      return Promise.resolve({error:'unsupported action'});
+    }
+
+    function escapeHtml(s){ return (s+'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // ======= Projects =======
+    async function loadProjects(){
+      const rows = useLocalFallback ? await api('list','projects') : await fetch(GAS_URL+'?action=list&type=projects').then(r=>r.json()).catch(()=>[]);
+      const wrap = document.getElementById('projectsTableWrap');
+      const html = [];
+      html.push('<table><thead><tr><th>العنوان</th><th>الحالة</th><th>السعر</th><th>النوع</th><th>الصورة الأساسية</th><th>للبيع</th><th>التواريخ/الوصف</th><th>إجراءات</th></tr></thead><tbody>');
+      (rows||[]).forEach(r => {
+        const img = r.main_image || r['main_image'] || '';
+        const thumb = img ? `<img src="${escapeHtml(img)}" class="thumb" onerror="this.style.display='none'"/>` : '';
+        html.push(`<tr><td>${escapeHtml(r.title||r['title']||'')}</td><td>${escapeHtml(r.status||'')}</td><td>${escapeHtml(r.price||'')}</td><td>${escapeHtml(r.property_type||'')}</td><td>${thumb}</td><td>${(r.for_sale==true||r.for_sale=='true' || r.for_sale=='نعم')? 'نعم':'لا'}</td><td>${escapeHtml((r.start_date||'')+' - '+(r.end_date||'')+'\n'+(r.description||''))}</td><td class="actions"><button class="btn secondary" onclick="editProject('${r.id}')">تعديل</button><button class="btn" onclick="deleteProject('${r.id}')">حذف</button></td></tr>`)
+      });
+      html.push('</tbody></table>');
+      wrap.innerHTML = html.join('\n');
+    }
+
+    document.getElementById('addProjectBtn').addEventListener('click', ()=>{
+      openModal('إضافة مشروع جديد', projectFormHtml(), async ()=>{
+        const data = formToObj('projectForm');
+        await api('create','projects',data);
+        await loadProjects();
+      });
+    });
+
+    window.editProject = function(id){
+      (async ()=>{
+        const rows = useLocalFallback ? await api('list','projects') : await fetch(GAS_URL+'?action=list&type=projects').then(r=>r.json()).catch(()=>[]);
+        const row = (rows||[]).find(r=>''+r.id==''+id);
+        if(!row){ alert('لم يتم العثور على المشروع'); return; }
+        openModal('تعديل المشروع', projectFormHtml(row), async ()=>{
+          const data = formToObj('projectForm'); data.id = id;
+          await api('update','projects',data);
+          await loadProjects();
+        });
+      })();
+    }
+
+    window.deleteProject = async function(id){ if(!confirm('هل تريد حذف المشروع؟')) return; await api('delete','projects',{id}); await loadProjects(); }
+
+    function projectFormHtml(data={}){
+      return `
+        <form id="projectForm">
+          <input name="title" placeholder="العنوان" value="${data.title||''}" />
+          <select name="status">
+            <option value="بيع عقار" ${(data.status=='بيع عقار')?'selected':''}>بيع عقار</option>
+            <option value="شراء عقار" ${(data.status=='شراء عقار')?'selected':''}>شراء عقار</option>
+            <option value="تأجير عقار" ${(data.status=='تأجير عقار')?'selected':''}>تأجير عقار</option>
+          </select>
+          <input name="price" placeholder="السعر" type="number" value="${data.price||''}" />
+          <input name="property_type" placeholder="نوع الخاصية" value="${data.property_type||''}" />
+          <input name="main_image" placeholder="رابط الصورة الأساسية (أو قيمة الخلية)" value="${data.main_image||''}" />
+          <div class="row-flex"><input name="start_date" placeholder="تاريخ البداية" value="${data.start_date||''}" /><input name="end_date" placeholder="تاريخ النهاية" value="${data.end_date||''}" /></div>
+          <textarea name="description" placeholder="وصف المشروع">${data.description||''}</textarea>
+          <select name="for_sale"><option value="true" ${(data.for_sale==true||data.for_sale=='true' || data.for_sale=='نعم')?'selected':''}>نعم</option><option value="false" ${(data.for_sale==false||data.for_sale=='false' || data.for_sale=='لا')?'selected':''}>لا</option></select>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <input name="image1" placeholder="صورة 1 (رابط أو قيمة الخلية)" value="${data.image1||''}" />
+            <input name="image2" placeholder="صورة 2" value="${data.image2||''}" />
+            <input name="image3" placeholder="صورة 3" value="${data.image3||''}" />
+            <input name="image4" placeholder="صورة 4" value="${data.image4||''}" />
+            <input name="image5" placeholder="صورة 5" value="${data.image5||''}" />
+            <input name="image6" placeholder="صورة 6" value="${data.image6||''}" />
+          </div>
+        </form>
+      `;
+    }
+
+    // ======= Users =======
+    async function loadUsers(){
+      const rows = useLocalFallback ? await api('list','users') : await fetch(GAS_URL+'?action=list&type=users').then(r=>r.json()).catch(()=>[]);
+      const wrap = document.getElementById('usersTableWrap');
+      const html = [];
+      html.push('<table><thead><tr><th>الاسم الكامل</th><th>اسم المستخدم</th><th>الدور</th><th>البريد</th><th>الهاتف</th><th>البلد</th><th>إجراءات</th></tr></thead><tbody>');
+      (rows||[]).forEach(r => {
+        html.push(`<tr><td>${escapeHtml(r.full_name||'')}</td><td>${escapeHtml(r.username||'')}</td><td>${escapeHtml(r.role||'')}</td><td>${escapeHtml(r.email||'')}</td><td>${escapeHtml(r.phone||'')}</td><td>${escapeHtml(r.country||'')}</td><td class="actions"><button class="btn secondary" onclick="editUser('${r.id}')">تعديل</button><button class="btn" onclick="deleteUser('${r.id}')">حذف</button></td></tr>`)
+      });
+      html.push('</tbody></table>');
+      wrap.innerHTML = html.join('\n');
+    }
+
+    document.getElementById('addUserBtn').addEventListener('click', ()=>{
+      openModal('إضافة مستخدم', userFormHtml(), async ()=>{
+        const data = formToObj('userForm');
+        await api('create','users',data);
+        await loadUsers();
+      });
+    });
+
+    window.editUser = function(id){
+      (async ()=>{
+        const rows = useLocalFallback ? await api('list','users') : await fetch(GAS_URL+'?action=list&type=users').then(r=>r.json()).catch(()=>[]);
+        const row = (rows||[]).find(r=>''+r.id==''+id);
+        if(!row){ alert('لم يتم العثور على المستخدم'); return; }
+        openModal('تعديل المستخدم', userFormHtml(row), async ()=>{
+          const data = formToObj('userForm'); data.id = id;
+          await api('update','users',data);
+          await loadUsers();
+        });
+      })();
+    }
+
+    window.deleteUser = async function(id){ if(!confirm('هل تريد حذف المستخدم؟')) return; await api('delete','users',{id}); await loadUsers(); }
+
+    function userFormHtml(data={}){
+      return `
+        <form id="userForm">
+          <input name="full_name" placeholder="الاسم الكامل" value="${data.full_name||''}" />
+          <input name="username" placeholder="اسم المستخدم" value="${data.username||''}" />
+          <select name="role"><option value="مسئول" ${(data.role=='مسئول')?'selected':''}>مسئول</option><option value="مستخدم" ${(data.role=='مستخدم')?'selected':''}>مستخدم</option></select>
+          <input name="email" placeholder="البريد الإلكتروني" value="${data.email||''}" />
+          <input name="password" placeholder="كلمة المرور" type="password" value="${data.password||''}" />
+          <input name="phone" placeholder="رقم الهاتف" value="${data.phone||''}" />
+          <input name="country" placeholder="البلد" value="${data.country||''}" />
+        </form>
+      `;
+    }
+
+    // ======= Offers =======
+    async function loadOffers(){
+      const rows = useLocalFallback ? await api('list','offers') : await fetch(GAS_URL+'?action=list&type=offers').then(r=>r.json()).catch(()=>[]);
+      const wrap = document.getElementById('offersTableWrap');
+      const html = [];
+      html.push('<table><thead><tr><th>العنوان</th><th>السعر الأساسي</th><th>نسبة التخفيض</th><th>سعر بعد الخصم</th><th>الصورة الأساسية</th><th>التواريخ</th><th>إجراءات</th></tr></thead><tbody>');
+      (rows||[]).forEach(r => {
+        const img = r.main_image || '';
+        const thumb = img ? `<img src="${escapeHtml(img)}" class="thumb" onerror="this.style.display='none'"/>` : '';
+        const discounted = computeDiscounted(r.base_price, r.discount_percent);
+        html.push(`<tr><td>${escapeHtml(r.title||'')}</td><td>${escapeHtml(r.base_price||'')}</td><td>${escapeHtml(r.discount_percent||'')}%</td><td>${escapeHtml(discounted||'')}</td><td>${thumb}</td><td>${escapeHtml((r.start_date||'')+' - '+(r.end_date||''))}</td><td class="actions"><button class="btn secondary" onclick="editOffer('${r.id}')">تعديل</button><button class="btn" onclick="deleteOffer('${r.id}')">حذف</button></td></tr>`)
+      });
+      html.push('</tbody></table>');
+      wrap.innerHTML = html.join('\n');
+    }
+
+    document.getElementById('addOfferBtn').addEventListener('click', ()=>{
+      openModal('إضافة عرض', offerFormHtml(), async ()=>{
+        const data = formToObj('offerForm');
+        // ensure discounted_price computed
+        data.discounted_price = computeDiscounted(data.base_price, data.discount_percent);
+        await api('create','offers',data);
+        await loadOffers();
+      });
+    });
+
+    window.editOffer = function(id){
+      (async ()=>{
+        const rows = useLocalFallback ? await api('list','offers') : await fetch(GAS_URL+'?action=list&type=offers').then(r=>r.json()).catch(()=>[]);
+        const row = (rows||[]).find(r=>''+r.id==''+id);
+        if(!row){ alert('لم يتم العثور على العرض'); return; }
+        openModal('تعديل العرض', offerFormHtml(row), async ()=>{
+          const data = formToObj('offerForm'); data.id = id;
+          data.discounted_price = computeDiscounted(data.base_price, data.discount_percent);
+          await api('update','offers',data);
+          await loadOffers();
+        });
+      })();
+    }
+
+    window.deleteOffer = async function(id){ if(!confirm('هل تريد حذف العرض؟')) return; await api('delete','offers',{id}); await loadOffers(); }
+
+    function offerFormHtml(data={}){
+      return `
+        <form id="offerForm">
+          <input name="title" placeholder="العنوان" value="${data.title||''}" />
+          <input name="base_price" placeholder="السعر الأساسي" type="number" value="${data.base_price||''}" />
+          <input name="discount_percent" placeholder="نسبة التخفيض (مثال: 15)" type="number" value="${data.discount_percent||''}" />
+          <input name="discounted_price" placeholder="سعر بعد التخفيض" value="${data.discounted_price||''}" readonly />
+          <div class="row-flex"><input name="start_date" placeholder="تاريخ البداية" value="${data.start_date||''}" /><input name="end_date" placeholder="تاريخ النهاية" value="${data.end_date||''}" /></div>
+          <textarea name="description" placeholder="وصف العرض">${data.description||''}</textarea>
+          <input name="main_image" placeholder="رابط الصورة الأساسية (أو قيمة الخلية)" value="${data.main_image||''}" />
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <input name="image1" placeholder="صورة 1 (رابط أو قيمة الخلية)" value="${data.image1||''}" />
+            <input name="image2" placeholder="صورة 2" value="${data.image2||''}" />
+            <input name="image3" placeholder="صورة 3" value="${data.image3||''}" />
+            <input name="image4" placeholder="صورة 4" value="${data.image4||''}" />
+            <input name="image5" placeholder="صورة 5" value="${data.image5||''}" />
+            <input name="image6" placeholder="صورة 6" value="${data.image6||''}" />
+          </div>
+        </form>
+      `;
+    }
+
+    function computeDiscounted(base, pct){
+      base = parseFloat(base);
+      pct = parseFloat(pct);
+      if(isNaN(base)) return '';
+      if(isNaN(pct)) return base.toFixed(2);
+      const val = base * (1 - pct/100);
+      return val.toFixed(2);
+    }
+
+    // form helpers
+    function formToObj(id){
+      const el = document.getElementById(id);
+      const inputs = el.querySelectorAll('input,textarea,select');
+      const out = {};
+      inputs.forEach(i=>{ out[i.name]=i.type==='number'? i.value : i.value; });
+      return out;
+    }
+
+    // ================= new image upload helpers =================
+    function resizeImage(file, maxDim = 2000) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = e => {
+          img.onload = () => {
+            let { width, height } = img;
+            const ratio = width / height;
+            if (Math.max(width, height) > maxDim) {
+              if (width > height) { width = maxDim; height = Math.round(maxDim / ratio); }
+              else { height = maxDim; width = Math.round(maxDim * ratio); }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const mime = file.type || 'image/jpeg';
+            const dataUrl = canvas.toDataURL(mime, 0.9);
+            resolve(dataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadFile(file, targetInput){
+      try{
+        targetInput.classList.add('uploading');
+        const resizedDataUrl = await resizeImage(file, 2000);
+
+        if(!GAS_URL){
+          targetInput.value = resizedDataUrl;
+          targetInput.dispatchEvent(new Event('input'));
+          targetInput.classList.remove('uploading');
+          return;
+        }
+
+        const payload = {
+          action: 'uploadImage',
+          filename: file.name,
+          data: resizedDataUrl
+        };
+
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+          body: JSON.stringify(payload)
+        });
+
+        const j = await res.json();
+        if(j && j.ok && j.url){
+          targetInput.value = j.url;
+          targetInput.dispatchEvent(new Event('input'));
+        } else {
+          console.error('upload failed', j);
+          alert('فشل رفع الصورة: ' + (j && j.error ? j.error : 'خطأ غير معروف'));
+        }
+
+      }catch(err){
+        console.error(err);
+        alert('حصل خطأ أثناء تجهيز/رفع الصورة: ' + err.message);
+      }finally{
+        targetInput.classList.remove('uploading');
+      }
+    }
+
+    function attachBrowseToImageInputs(){
+      document.querySelectorAll('#modalBody input[name^="main_image"], #modalBody input[name^="image"]').forEach(inp=>{
+        if(inp.dataset.hasBrowse) return;
+        inp.dataset.hasBrowse = '1';
+        inp.style.display = 'inline-block';
+        inp.style.width = '60%';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = 'استعراض';
+        btn.className = 'browse-btn';
+
+        const fileInp = document.createElement('input');
+        fileInp.type = 'file';
+        fileInp.accept = 'image/*';
+        fileInp.style.display = 'none';
+
+        inp.parentNode.insertBefore(btn, inp.nextSibling);
+        inp.parentNode.insertBefore(fileInp, btn.nextSibling);
+
+        let prev = inp.nextElementSibling;
+        if(!(prev && prev.classList && prev.classList.contains('preview'))){
+          prev = document.createElement('img'); prev.className = 'preview';
+          inp.parentNode.insertBefore(prev, fileInp.nextSibling);
+          prev.style.display = inp.value ? 'inline-block' : 'none';
+          if(inp.value) prev.src = inp.value;
+        }
+
+        inp.addEventListener('input', ()=>{
+          const val = inp.value && inp.value.trim();
+          if(val){ prev.src = val; prev.style.display = 'inline-block'; } else { prev.style.display = 'none'; }
+        });
+
+        btn.addEventListener('click', ()=> fileInp.click());
+
+        fileInp.addEventListener('change', async (e)=>{
+          const file = e.target.files && e.target.files[0];
+          if(!file) return;
+          if(file.size > 10 * 1024 * 1024){ if(!confirm('الحجم أكبر من 10MB — استمر؟')) return; }
+          await uploadFile(file, inp);
+          fileInp.value = '';
+        });
+      });
+    }
+
+    // called after modal innerHTML is set
+    function initFormBehaviors(){
+      // offer form: compute discounted price live
+      const offerForm = document.getElementById('offerForm');
+      if(offerForm){
+        const base = offerForm.querySelector('input[name="base_price"]');
+        const pct = offerForm.querySelector('input[name="discount_percent"]');
+        const out = offerForm.querySelector('input[name="discounted_price"]');
+        function recompute(){ if(!out) return; out.value = computeDiscounted(base.value, pct.value); }
+        if(base) base.addEventListener('input', recompute);
+        if(pct) pct.addEventListener('input', recompute);
+        recompute();
+      }
+
+      // image preview helpers for any form (kept for manual URLs)
+      document.querySelectorAll('#modalBody input[name^="main_image"], #modalBody input[name^="image"]').forEach(inp=>{
+        inp.addEventListener('input', ()=>{
+          const val = inp.value.trim();
+          let prev = inp.nextElementSibling;
+          if(prev && prev.classList && prev.classList.contains('preview')){ /* reuse */ }
+          else{ prev = document.createElement('img'); prev.className = 'thumb preview'; prev.style.marginLeft='8px'; inp.parentNode.insertBefore(prev, inp.nextSibling); }
+          if(val){ prev.src = val; prev.style.display='inline-block'; prev.onerror = ()=>{ prev.style.display='none'; } }
+          else prev.style.display='none';
+        });
+      });
+
+      // attach browse buttons & file inputs
+      attachBrowseToImageInputs();
+    }
+
+    // init home link
+    document.getElementById('homeLink').href = '/';
+
+    // initial: show dashboard only
+    // optional: preload data
+
+
+    ///////////////////////////////////////////////////////////////////////////////////// Messages
+    // Router المحدث
+document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', (e)=>{
+  e.preventDefault();
+  document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
+  a.classList.add('active');
+  const t = a.dataset.target;
+  document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
+  document.getElementById(t).style.display='block';
+  document.getElementById('page-title').textContent = a.textContent.trim();
+  
+  if(t==='projects') loadProjects();
+  if(t==='users') loadUsers();
+  if(t==='offers') loadOffers();
+  if(t==='messages') loadMessages(); // الإضافة هنا
+}));
+
+// تحديث الزر
+document.getElementById('refreshBtn').addEventListener('click', ()=>{
+  const active = document.querySelector('.nav-link.active').dataset.target;
+  if(active==='projects') loadProjects();
+  if(active==='users') loadUsers();
+  if(active==='offers') loadOffers();
+  if(active==='messages') loadMessages(); // الإضافة هنا
+});
+
+// ======= Messages Section (Final Fixed Mapping) =======
+    async function loadMessages() {
+      const wrap = document.getElementById('messagesTableWrap');
+      wrap.innerHTML = '<p style="text-align:center; color:var(--luxury-gold);">جاري تحميل الرسائل...</p>';
+
+      try {
+        const rows = await api('list', 'messages');
+        
+        if (!rows || rows.length === 0) {
+          wrap.innerHTML = '<p style="text-align:center; color:var(--text-gray);">لا توجد رسائل واردة.</p>';
+          return;
+        }
+
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم الكامل</th>
+                <th>رقم الهاتف</th>
+                <th>الرسالة / الطلب</th>
+                <th>التاريخ والوقت</th>
+                <th style="text-align: center;">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+        // عرض الأحدث في الأعلى
+        [...rows].reverse().forEach(r => {
+          
+          // دمج التاريخ والوقت في خلية واحدة بشكل جمالي
+          const fullDateTime = `${r.date || ''} | ${r.time || ''}`;
+          
+          html += `
+            <tr>
+              <td style="font-weight:bold; color:var(--light-gold)">
+                ${escapeHtml(r.name || 'غير معروف')}
+              </td>
+              
+              <td style="direction: ltr; text-align: right;">
+                <a href="tel:${r.phone}" style="color:var(--text-white); text-decoration:none">
+                  ${escapeHtml(r.phone || '')}
+                </a>
+              </td>
+              
+              <td style="max-width:300px; white-space: pre-wrap;">
+                ${escapeHtml(r.message || '')}
+              </td>
+              
+              <td style="font-size: 0.85em; color: var(--text-gray); white-space: nowrap;">
+                ${escapeHtml(fullDateTime)}
+              </td>
+              
+              <td class="actions" style="text-align: center;">
+                <button class="btn" 
+                        style="background-color: var(--luxury-gold); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer;" 
+                        onclick="deleteMessage('${r.id}')">
+                  حذف
+                </button>
+              </td>
+            </tr>`;
+        });
+
+        html += '</tbody></table>';
+        wrap.innerHTML = html;
+      } catch (err) {
+        console.error('Error fetching messages:', err);
+        wrap.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في جلب البيانات من Google Sheets.</p>';
+      }
+    }
+
+// دالة حذف الرسالة
+window.deleteMessage = async function(id) {
+  if (!confirm('هل أنت متأكد من حذف هذه الرسالة نهائياً؟')) return;
+  await api('delete', 'messages', { id });
+  await loadMessages();
+};
+  </script>
+
+  <!--
+    Apps Script snippet (put this in a standalone Apps Script project -> Code.gs and Deploy as Web App).
+    It accepts POST { action: 'uploadImage', filename, data } where data is a dataURL (base64).
+  -->
+  <!--
+  // Apps Script server side (Code.gs)
+  function doPost(e){
+    try{
+      if(!e.postData || !e.postData.contents) return json({ok:false,error:'no post data'});
+      const payload = JSON.parse(e.postData.contents);
+
+      if(payload.action === 'uploadImage'){
+        const dataUrl = payload.data;
+        const parts = dataUrl.split(',');
+        if(parts.length < 2) return json({ok:false,error:'invalid dataURL'});
+        const meta = parts[0];
+        const base64 = parts[1];
+        const mimeMatch = meta.match(/data:(.*);base64/);
+        const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+        const name = payload.filename || ('img_' + new Date().getTime());
+        const blob = Utilities.newBlob(Utilities.base64Decode(base64), mimeType, name);
+        const file = DriveApp.createFile(blob);
+        try { file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch(e){ }
+        const id = file.getId();
+        const url = 'https://drive.google.com/uc?export=view&id=' + id;
+        return json({ok:true, url: url, id: id, fileUrl: file.getUrl()});
+      }
+      return json({ok:false, error:'unsupported action'});
+    }catch(err){ return json({ok:false, error: err.message}); }
+  }
+
+  function json(obj){ return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON); }
+  -->
+
+</body>
+</html>

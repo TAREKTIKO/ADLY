@@ -1,0 +1,664 @@
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* Default Code */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'playfair display', serif;
+    background-color: var(--primary-black);
+    overflow-x: hidden;
+}
+
+.container{
+    width: 80%;
+    height: 800px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:root {
+  /* الألوان الأساسية */
+  --primary-black: #0A0A0A;    /* أسود عميق للخلفيات */
+  --luxury-gold: #D4AF37;      /* الذهبي الملكي للوجو والعناوين */
+  --light-gold: #F1D279;       /* ذهبي فاتح للتفاعل Hover effects */
+  --deep-gold: #996515;        /* ذهبي غامق للظلال أو الخطوط الرفيعة */
+  
+  /* ألوان النصوص */
+  --text-white: #FFFFFF;       /* أبيض ناصع للنصوص الأساسية على الخلفية السوداء */
+  --text-gray: #A0A0A0;        /* رمادي هادئ للنصوص الثانوية والوصف */
+  
+  /* ألوان الفورم (Form Elements) */
+  --input-bg: #1A1A1A;         /* أسود فاتح قليلاً لخلفية خانات الإدخال */
+  --input-border: #333333;     /* لون الحدود لخانات الإدخال */
+  
+  /* المسافات والحدود */
+  --main-transition: all 0.3s ease; /* سرعة التحول في الأزرار والروابط */
+  --secondary-transition: all 0.7s ease-in-out; /* سرعة التحول الثانوية */
+
+  --main-font: 'Almarai', serif; /* الخط الرئيسي للموقع */
+  --secondary-font: 'Tajawal', sans-serif; /* الخط الثانوي للموقع */
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+            /* Header */
+/* /////////////////////////////////////////////////////////////////////// */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 100px;
+    background-color: var(--primary-black);
+    height: 65px;
+    width: 100%;
+    z-index: 1000;
+    font-family: var(--secondary-font);
+    border-bottom: var(--luxury-gold) 1px solid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+nav .nav-img{
+    height: 65px;
+    width: 65px;
+}
+
+nav .nav-img img{
+    height: 100%;
+    width: 100%;
+}
+
+nav ul{
+    display: flex;
+    gap: 40px;
+}
+
+nav ul li{
+    list-style: none;
+    color: var(--light-gold);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+
+nav ul a{
+    text-decoration: none;
+}
+
+nav ul li:hover{
+    color: var(--luxury-gold);
+}
+
+.humburger{
+    display: none;
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* Header */
+/* /////////////////////////////////////////////////////////////////////// */
+
+header{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/Background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.header-text{
+    color: var(--text-white);
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    font-family: var(--main-font);
+    margin-bottom: -430px;
+}
+
+.header-text h1{
+    color: var(--light-gold);
+}
+
+.header-text p{
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.mobile-button{
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto 15px;
+    display: none;
+}
+.mobile-button a {
+    text-decoration: none;
+    background-color: var(--luxury-gold);
+    color: var(--text-white);
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: var(--main-font);
+    transition: var(--main-transition);
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* services-section */
+/* /////////////////////////////////////////////////////////////////////// */
+
+.services{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-black);
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    border-top: var(--luxury-gold) 1px solid;
+    border-bottom: var(--luxury-gold) 1px solid;
+    scroll-margin-top: 60px;
+}
+
+.services-title{
+    position: absolute;
+    top: 90px;
+    color: var(--text-white);
+    font-size: 45px;
+    font-weight: 700;
+    text-align: center;
+    font-family: var(--main-font);
+}
+
+.services-content{
+    display: flex;
+    gap: 80px;
+    margin-top: 80px;
+}
+
+.service-box{
+    background-color: var(--input-bg);
+    border: var(--input-border) 1px solid;
+    border-radius: 10px;
+    padding: 0px 0px 20px;
+    width: 350px;
+    min-height: 500px; /* بدل height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--secondary-transition);
+    cursor: pointer;
+    color: var(--text-white);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    font-family: var(--main-font);
+}
+
+.service-box .img-box{
+   width: 100%;
+   height: 250px;
+   transition: var(--secondary-transition);
+}
+
+.service-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-box:hover{
+    border: var(--luxury-gold) 1px solid;
+    border-radius: 35px 0px 35px 0px;
+    transform: scale(1.05);
+}
+
+.service-box h3{
+    font-size: 28px;
+    font-weight: 600;
+    margin: 20px 0px 10px;
+    font-family: var(--secondary-font);
+}
+
+.service-box p{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-gray);
+    font-family: var(--secondary-font);
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.service-box a{
+    margin-top: auto; /* ⭐ يخليه تحت */
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: var(--light-gold);
+    font-weight: 600;
+    border: 1px solid var(--light-gold);
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: var(--main-transition);
+    
+}
+
+.service-box a:hover{
+    background-color: var(--light-gold);
+    color: var(--primary-black);
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* Our-Offer-section */
+/* /////////////////////////////////////////////////////////////////////// */
+
+#Our-Offer{
+    background-color: var(--text-white);
+}
+
+
+.offer-title{
+    color: var(--luxury-gold);
+}
+.offer-box{
+
+}
+                            /* الكود البديل */
+/* #Our-Offer{
+    background-color: var(--text-gray);
+}
+
+
+.offer-title{
+    color: var(--text-white);
+}
+
+.offer-box{
+    border: 1px solid var(--text-white);
+} */
+
+
+/* تعديل حاوية العروض لتسمح بالتمرير الأفقي */
+#offersContainer {
+    display: flex;
+    gap: 40px; /* تقليل المسافة قليلاً لتناسب السكرول */
+    overflow-x: auto; /* تفعيل التمرير الأفقي */
+    padding: 20px 50px; /* مساحة جانبية لكي لا تلتصق الكروت بالحواف */
+    width: 100%;
+    scroll-behavior: smooth; /* حركة ناعمة عند التمرير */
+    scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+    margin-top: 100px;
+}
+
+/* إخفاء شريط التمرير في Chrome و Safari */
+#offersContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* التأكد من أن الكروت لا تتقلص داخل الـ Flex */
+.offer-box {
+    flex: 0 0 auto; /* يمنع الكارت من الصغر ويحافظ على عرضه الثابت 350px */
+}
+
+/* تعديل بسيط للسكشن ليناسب المحتوى الديناميكي */
+#Our-Offer {
+    height: auto; /* تغيير من 100vh ليتناسب مع المحتوى */
+    min-height: 100vh;
+    padding-bottom: 50px;
+   /* background-color: var(--primary-black); /* أو var(--text-white) حسب رغبتك */
+}
+
+/* حاوية تضم السكرول والأسهم */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 100px; /* لترك مسافة للعنوان */
+}
+
+/* تصميم الأزرار */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(18, 18, 18, 0.8); /* خلفية سوداء شفافة */
+    color: var(--luxury-gold);
+    border: 1px solid var(--luxury-gold);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.scroll-btn:hover {
+    background: var(--luxury-gold);
+    color: var(--primary-black);
+}
+
+.scroll-btn.left { left: -20px; }
+.scroll-btn.right { right: -20px; }
+
+/* إخفاء شريط التمرير الافتراضي ليبقى التصميم نظيفاً */
+#offersContainer {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+#offersContainer::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* contact-us-content */
+/* /////////////////////////////////////////////////////////////////////// */
+
+
+.form-border{
+    width: 100%;
+    margin: 0 auto;
+    border: var(--luxury-gold) 1px solid;
+    border-radius: 15px;
+    padding: 150px 350px;
+    position: relative;
+}
+
+.contact-us{
+    background-color: var(--primary-black);
+    width: 90%;
+    margin: 0 auto;
+    padding: 100px 0px;
+    border-top: var(--luxury-gold) 1px solid;
+    border-bottom: none;
+}
+
+.contact-us-content form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+    max-width: 100%;
+}
+
+.contact-us-content form input{
+    background-color: var(--luxury-gold);
+    color: var(--primary-black);
+
+}
+.contact-us-content form textarea{
+    height: 150px;
+
+}
+.contact-us-content form input, .contact-us-content form textarea{
+    background-color: var(--input-bg);
+    border: var(--input-border) 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--text-white);
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    resize: none;
+}
+
+.contact-us-content form input::placeholder, .contact-us-content form textarea::placeholder{
+    color: var(--text-gray);
+}
+
+input:focus,
+textarea:focus{
+    outline: none;
+    border-color:  #D4AF37; /* ذهبي */
+    box-shadow: 0 0 8px var(--luxury-gold);
+}
+
+.contact-us-content form button{
+    background-color: var(--luxury-gold);
+    color: var(--primary-black);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--main-transition);
+    font-family: var(--secondary-font);
+}
+
+.contact-us-content form button:hover{
+    background-color: var(--deep-gold);
+    color: var(--text-white);
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* Footer */
+/* /////////////////////////////////////////////////////////////////////// */
+
+footer{
+    background-color: var(--primary-black);
+    color: var(--text-gray);
+    text-align: center;
+    padding: 20px 0px;
+    font-family: var(--secondary-font);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    border-top: var(--luxury-gold) 1px solid;
+}
+
+footer p{
+    margin: 5px 0px;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* ===================================================
+   Tablets (768px to 1024px)
+====================================================== */
+@media (max-width: 1024px) {
+    nav { padding: 0 40px; }
+    .services-content { gap: 30px; }
+    .service-box { width: 300px; }
+    .form-border { padding: 80px 100px; }
+}
+
+/* Mobile Devices */
+@media (max-width: 412px) { 
+/* /* ===============================
+   Global
+=============================== 
+body{
+    width: 100%;
+} */
+
+/* ===============================
+    Navbar
+=============================== */
+nav{
+    padding: 0px 20px;
+    height: 60px;
+}
+
+nav ul{
+    gap: 15px;
+    display: block;
+}
+
+nav ul li{
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+nav .nav-img{
+    width: 45px;
+    height: 45px;
+}
+
+/* ===============================
+   Header
+=============================== */
+header{
+    height: 100vh;
+    width: 100%;
+}
+
+.header-text{
+    font-size: 28px;
+    margin-bottom: 0;
+    padding: 0 10px;
+}
+
+.header-text p{
+    font-size: 18px;
+}
+
+.mobile-button{
+    display: block;
+    bottom: 10%;
+}
+
+.humburger{
+    display: block;
+    width: 45px;
+    height: 45px;
+    color: var(--luxury-gold);
+    font-size: 28px;
+    position: relative;
+}
+
+.humburger i{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: var(--main-transition);
+}
+
+.humburger i.fa-xmark {
+    display: none;
+}
+
+.humburger i.active{
+    opacity: 1;
+    display: block;
+}
+
+.navbar{
+    position: absolute;
+    background-color: var(--primary-black);
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 5px 20px;
+    /* opacity: 0; */
+    display: none;
+    text-align: center;
+    transition: var(--main-transition);
+}
+
+.navbar.active{
+    opacity: 1;
+    display: block;
+}
+
+
+/* ===============================
+    Services Section
+=============================== */
+.services{
+    height: auto;
+    padding: 120px 0 60px;
+    width: 100%;
+}
+
+.services-title{
+    font-size: 30px;
+    top: 40px;
+}
+
+.services-content{
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.service-box{
+    width: 90%;
+    min-height: auto;
+    margin: 0 auto;
+}
+
+.service-box .img-box{
+    height: 200px;
+}
+
+.service-box h3{
+    font-size: 22px;
+}
+
+.service-box p{
+    font-size: 16px;
+}
+
+/* ===============================
+    Contact Us
+=============================== */
+.contact-us{
+    padding: 60px 0;
+    width: 100%;
+}
+
+.form-border{
+    padding: 40px 65px;
+    width: 100%;
+}
+
+.contact-us-content form{
+    width: 100%;        /* ⭐ مش 400px */
+    max-width: 100%;
+}
+
+.contact-us-content form input,
+.contact-us-content form textarea,
+.contact-us-content form button{
+    width: 100%;
+}
+
+/* ===============================
+    Footer
+=============================== */
+footer p{
+    font-size: 12px;
+}
+
+}
+
