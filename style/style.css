@@ -488,19 +488,19 @@ footer p{
 
 /* Mobile Devices */
 @media (max-width: 412px) { 
-/* /* ===============================
+/* ===============================
    Global
-=============================== 
+=============================== */
 body{
-    width: 100%;
-} */
+    height: auto;
+}
 
 /* ===============================
     Navbar
 =============================== */
 nav{
-    padding: 0px 20px;
-    height: 60px;
+    padding: 15px 20px;
+    height: auto;
 }
 
 nav ul{
@@ -524,21 +524,17 @@ nav .nav-img{
 header{
     height: 100vh;
     width: 100%;
+    position: relative;
 }
 
 .header-text{
     font-size: 28px;
     margin-bottom: 0;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 
 .header-text p{
     font-size: 18px;
-}
-
-.mobile-button{
-    display: block;
-    bottom: 10%;
 }
 
 .humburger{
@@ -575,7 +571,7 @@ header{
 .navbar{
     position: absolute;
     background-color: var(--primary-black);
-    top: 60px;
+    top: 75px;
     left: 0;
     width: 100%;
     padding: 5px 20px;
@@ -661,4 +657,3 @@ footer p{
 }
 
 }
-
