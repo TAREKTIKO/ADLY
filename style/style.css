@@ -657,11 +657,15 @@ header{
     display: none;
 }
 
+#Our-Offer{
+    min-height: 10vh;
+}
+
 /* 1. الحاوية الكبرى: نلغي أي قيود قديمة */
 .slider-wrapper {
     overflow: visible ; /* للسماح للحاوية الداخلية بالتحكم */
     width: 100%;
-    margin-top: 40px;
+    margin: 0px;
 }
 
 /* 2. حاوية الكروت: المحرك الأساسي */
