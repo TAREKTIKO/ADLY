@@ -479,10 +479,6 @@ footer p{
 Tablets (768px to 1024px)
 ====================================================== */
 @media (max-width: 1024px) {
-    .services-content { gap: 30px; }
-    .service-box { width: 300px; }
-    .form-border { padding: 80px 100px; }
-
 /* ===============================
    Global
 =============================== */
@@ -1152,5 +1148,6 @@ header .mobile-button{
 footer p{
     font-size: 12px;
 }
+
 
 }
