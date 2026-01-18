@@ -650,6 +650,44 @@ header{
 }
 
 /* ===============================
+    Our-Offer Section
+=============================== */
+
+.services .scroll-btn {
+    display: none;
+}
+
+/* 1. الحاوية الكبرى: نلغي أي قيود قديمة */
+.slider-wrapper {
+    overflow: visible ; /* للسماح للحاوية الداخلية بالتحكم */
+    width: 100%;
+    margin-top: 40px;
+}
+
+/* 2. حاوية الكروت: المحرك الأساسي */
+#offersContainer {
+    display: flex ;   /* تأكيد الـ Flex */
+    flex-direction: row ; /* تأكيد الاتجاه الأفقي */
+    gap: 0 ;          /* إلغاء المسافات بين الكروت */
+    overflow-x: scroll ; /* تفعيل السكرول الإجباري */
+    scroll-snap-type: x mandatory ; /* تثبيت الكارت في المنتصف */
+    width: 100vw ;    /* العرض بكامل شاشة الموبايل */
+    padding: 0 ;
+    margin-left: -20px;         /* تعويض البادنج الخاص بالـ body إن وجد */
+    scrollbar-width: none;      /* إخفاء شريط التمرير */
+}
+
+/* 3. الكارت نفسه: يجب أن يكون بعرض الشاشة تماماً */
+.offer-box {
+    flex: 0 0 100% ;  /* إجبار الكارت على أخذ 100% من العرض */
+    width: 100% ;
+    scroll-snap-align: start ; /* الالتصاق ببداية الشاشة */
+    scroll-snap-stop: always ;
+    /* تأكد أن الكارت ليس له Margin جانبي */
+    margin: 0 10px; 
+}
+
+/* ===============================
     Footer
 =============================== */
 footer p{
