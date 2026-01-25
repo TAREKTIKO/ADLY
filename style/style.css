@@ -554,6 +554,10 @@ nav .nav-img{
     display: block;
 }
 
+.humburger i:active{
+    transform: rotate(180deg);
+}
+
 .navbar{
     position: absolute;
     background-color: var(--primary-black);
@@ -571,7 +575,6 @@ nav .nav-img{
     opacity: 1;
     display: block;
 }
-
 
 /* ===============================
    Header
