@@ -5,3 +5,11 @@ https://script.google.com/macros/s/AKfycbwSOwdkDWB_oE27GZLpB3nX0_zFNo2kYFd3Q_xhI
 deployment id
 
 AKfycbwSOwdkDWB_oE27GZLpB3nX0_zFNo2kYFd3Q_xhInB3UUKQZxqS_dfXOmJQ29P01hkWKw
+
+
+
+@Media Query
+** Mobile ==> @media (max-width: 575.98px)
+** Tablet ==> @media (min-width: 768px) and (max-width: 991.98px)
+** Desktop ==> @media (min-width: 992px) and (max-width: 1199.98px)
+** Extra large devices ==> (min-width: 1200px)

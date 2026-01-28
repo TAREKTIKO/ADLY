@@ -366,7 +366,207 @@ Tablets (768px to 1024px)
 }
 /* /////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* /////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media (max-width: 768px) {
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    /* ===============================
+   Global
+=============================== */
+body{
+    height: auto;
+}
+
+/* ===============================
+    Navbar
+=============================== */
+nav{
+    padding: 15px 20px;
+    height: auto;
+}
+
+nav ul{
+    gap: 15px;
+    display: block;
+}
+
+nav ul li{
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+nav .nav-img{
+    width: 45px;
+    height: 45px;
+}
+
+.humburger{
+    display: block;
+    width: 45px;
+    height: 45px;
+    color: var(--luxury-gold);
+    font-size: 28px;
+    position: relative;
+}
+
+.humburger i{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: var(--main-transition);
+}
+
+.humburger i.fa-xmark {
+    display: none;
+}
+
+.humburger i.active{
+    opacity: 1;
+    display: block;
+}
+
+.humburger i:active{
+    transform: rotate(180deg);
+}
+
+.navbar{
+    position: absolute;
+    background-color: var(--primary-black);
+    top: 75px;
+    left: 0;
+    width: 100%;
+    padding: 5px 20px;
+    /* opacity: 0; */
+    display: none;
+    text-align: center;
+    transition: var(--main-transition);
+}
+
+.navbar.active{
+    opacity: 1;
+    display: block;
+}
+/* ===============================
+    Body-Information
+=============================== */
+.body-information{
+    flex-direction: column;
+    height: auto;
+}
+.div-img{
+    display: none;
+}
+.product-details{
+    width: 100%;
+    height: auto;
+    text-align: right;
+}
+
+.product-content{
+    flex-direction: column;
+    align-items: right;
+    width: 100%;
+    margin: 0;
+    padding: 15px 15px 0;
+}
+.product-img{
+    width: 100%;
+    height: 250px;
+}
+.product-title{
+    width: 100%;
+    padding: 15px 0px;
+    text-align: right;
+}
+.product-title h3{
+    font-size: 35px;
+    margin: 0;
+}
+.product-title h6{
+    font-size: 18px; 
+    margin-top: 10px;
+}
+.product-title p{
+    font-size: 18px;
+    margin-top: 25px;
+}
+.product-Additions{
+    flex-direction: column;
+    width: 100%;
+    align-items: right;
+    margin: 0;
+    padding: 15px 15px 0;
+}
+.product-description{
+    width: 100%;
+    padding: 5px 0px 5px 15px;
+}
+.product-description h3{
+    font-size: 28px;
+}
+.product-description p{
+    font-size: 18px;
+    line-height: 28px;
+}
+.product-informations{
+    width: 100%;
+    margin-top: 25px;
+}
+.product-informations .offer-dates{
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+.offer-dates .start-date,
+.offer-dates .end-date{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.offer-dates .start-date span,
+.offer-dates .end-date span{
+    font-size: 16px;
+}
+.product-informations .product-type{
+    margin: 10px auto 0;
+    width: 45%;
+    padding: 0px;
+}
+.product-type h3{
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+.product-type p{
+    font-size: 20px;
+}
+.product-type i{
+    font-size: 30px;
+    margin: 15px 7px;
+}   
+.product-gallery{
+    padding: 20px 15px;
+    height: auto; /* لازم تحدد ارتفاع ثابت عشان السكرول يظهر */
+    overflow-y: scroll; /* تفعيل السكرول الرأسي فقط */
+    overflow-x: hidden; /* إلغاء السكرول الأفقي */
+}   
+.gallery-title{
+    font-size: 25px;
+}
+.images-grid{
+    flex-direction: column;
+    grid-template-columns: 3fr 3fr;
+    gap: 15px;
+}
+.image-card img{
+    height: 200px;
+    width: 100%;
+}
 
 }
 
@@ -374,7 +574,7 @@ Tablets (768px to 1024px)
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* Mobile Devices */
 
-@media (max-width: 412px) { 
+@media (max-width: 575.98px) { 
 /* ===============================
    Global
 =============================== */
