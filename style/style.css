@@ -18,12 +18,6 @@ body{
     overflow-x: hidden;
 }
 
-i,
-i:focus,
-i:active {
-  outline: none;
-}
-
 .container{
     width: 80%;
     height: 800px;
