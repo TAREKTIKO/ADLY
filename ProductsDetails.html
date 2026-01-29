@@ -28,6 +28,51 @@ body{
     background-color: var(--primary-black);
 }
 
+
+/* تصميم شاشة التحميل */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* ليكون فوق الناف بار وكل شيء */
+    transition: opacity 0.5s ease;
+}
+
+#loading-screen p {
+    color: var(--luxury-gold);
+    margin-top: 20px;
+    font-family: var(--secondary-font);
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+/* شكل الـ Spinner */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--input-border);
+    border-radius: 50%;
+    border-top-color: var(--luxury-gold);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* لإخفاء الصفحة أثناء التحميل ومنع السكرول */
+body.loading-active {
+    overflow: hidden;
+}
+
+
 :root {
   /* الألوان الأساسية */
   --primary-black: #0A0A0A;    /* أسود عميق للخلفيات */
@@ -780,6 +825,10 @@ nav .nav-img{
     </style>
 </head>
 <body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <p>جاري تحميل تفاصيل العقار...</p>
+    </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
     <!-- Navigation-bar -->
     <nav>
@@ -879,40 +928,42 @@ humburgerMenu.addEventListener('click', () => {
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzqRLJLuIIUOf5utsujSDbZoaA8IfeL4DWzk8mfZs_eD9IfFOG74r20zUH0GSISvyYeow/exec'; 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 2. استخراج الـ ID من رابط الصفحة (مثلاً: ProductsDetails.html?id=123)
+    // 1. تفعيل وضع التحميل
+    document.body.classList.add('loading-active');
+    
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
-    // التأكد من وجود ID في الرابط
     if (!productId) {
-        alert("خطأ: لم يتم تحديد معرف المنتج.");
-        window.location.href = "ProductsMenu.html"; // إعادة توجيه للمنيو
+        window.location.href = "ProductsMenu.html";
         return;
     }
 
     try {
-        // 3. الاتصال بـ Google Apps Script لجلب البيانات
-        // نستخدم fetch مع المعاملات المطلوبة للسكربت الخاص بك
         const response = await fetch(`${GAS_URL}?action=list&type=projects`);
-        
-        if (!response.ok) throw new Error("فشل الاتصال بالسيرفر");
-
         const data = await response.json();
-        
-        // 4. البحث عن المنتج المطابق للـ ID داخل المصفوفة
         const item = data.find(p => String(p.id) === String(productId));
 
         if (item) {
             renderProductDetails(item);
+            
+            // 2. إخفاء شاشة التحميل بعد معالجة البيانات
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                document.body.classList.remove('loading-active');
+            }, 500); // 500ms متوافقة مع الـ transition في CSS
+
         } else {
-            document.body.innerHTML = `
-                <div style="height:100vh; display:flex; justify-content:center; align-items:center; background:#0A0A0A; color:white; font-family:sans-serif;">
-                    <h1>عذراً، المنتج غير موجود أو تم حذفه.</h1>
-                </div>`;
+            // في حال عدم وجود المنتج
+            document.getElementById('loading-screen').style.display = 'none';
+            document.body.innerHTML = `<h1 style="color:white; text-align:center; margin-top:100px;">المنتج غير موجود</h1>`;
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("حدث خطأ أثناء تحميل بيانات المنتج.");
+        document.getElementById('loading-screen').style.display = 'none';
+        alert("حدث خطأ أثناء تحميل البيانات.");
     }
 });
 
