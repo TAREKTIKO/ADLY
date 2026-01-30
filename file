@@ -1,3 +1,4 @@
+/* 
 web app
 
 https://script.google.com/macros/s/AKfycbwSOwdkDWB_oE27GZLpB3nX0_zFNo2kYFd3Q_xhInB3UUKQZxqS_dfXOmJQ29P01hkWKw/exec
@@ -9,11 +10,15 @@ AKfycbwSOwdkDWB_oE27GZLpB3nX0_zFNo2kYFd3Q_xhInB3UUKQZxqS_dfXOmJQ29P01hkWKw
 
 
 @Media Query
-/* Mobile */
+        Mobile 
 @media (max-width: 576px) {}
 
-/* Tablet */
+        Tablet 
 @media (min-width: 577px) and (max-width: 992px) {}
 
-/* Desktop */
+        Desktop 
 @media (min-width: 993px) {}
+
+
+*/
+

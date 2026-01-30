@@ -50,15 +50,19 @@ async function loadOffers() {
 
         // إنشاء الكروت
         allOffers.forEach(offer => {
-            // ربط البيانات بالأعمدة بناءً على أسماء جدول Offers الخاص بك
             const title = offer.title || 'عرض خاص';
             const mainImg = offer.main_image || 'img/default-property.png';
             const desc = offer.description || 'لا يوجد وصف متاح لهذا العرض حالياً';
             const id = offer.id || '';
             const price = offer.discounted_price || offer.base_price || ''; 
+            
+            // 1. استخراج نسبة الخصم (تأكد أن الاسم مطابق لعمود الشيت عندك)
+            const discount = offer.discount_percent || ''; 
 
             const card = `
                 <div class="service-box offer-box">
+                    ${discount ? `<div class="discount-badge">خصم ${discount}</div>` : ''}
+                    
                     <div class="img-box">
                         <img src="${mainImg}" alt="${title}" onerror="this.src='img/default-property.png'">
                     </div>

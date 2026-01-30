@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -219,6 +220,34 @@ nav ul li:hover{
     height: 350px;
     border-radius: 15px;
     border: 3px solid var(--luxury-gold);
+    position: relative;
+}
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--luxury-gold);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: none; /* مخفية وهتظهر بالـ JS لو فيه خصم */
+}
+
+/* تنسيق السعر القديم */
+.old-price {
+    color: #a0a0a0;
+    font-size: 22px;
+    margin-left: 10px;
+    text-decoration: line-through;
+}
+.new-price {
+    color: var(--luxury-gold);
+    font-size: 30px;
+    font-weight: bold;
 }
 .product-img img{
     height: 100%;
@@ -864,6 +893,7 @@ nav .nav-img{
     <div class="product-details">
         <div class="product-content">
             <div class="product-img">
+                <div id="discountBadge" class="discount-badge"></div>
                 <img id="displayImage" src="" alt="">
             </div>
             <div class="product-title">
@@ -933,94 +963,103 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
+    // هنستقبل المصدر من الرابط (لو مش موجود هيفترض إنه مشاريع)
+    const source = urlParams.get('source') || 'projects';
 
     if (!productId) {
-        window.location.href = "ProductsMenu.html";
-        return;
-    }
-
-    try {
-        const response = await fetch(`${GAS_URL}?action=list&type=projects`);
-        const data = await response.json();
-        const item = data.find(p => String(p.id) === String(productId));
-
-        if (item) {
-            renderProductDetails(item);
-            
-            // 2. إخفاء شاشة التحميل بعد معالجة البيانات
-            const loadingScreen = document.getElementById('loading-screen');
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                document.body.classList.remove('loading-active');
-            }, 500); // 500ms متوافقة مع الـ transition في CSS
-
-        } else {
-            // في حال عدم وجود المنتج
-            document.getElementById('loading-screen').style.display = 'none';
-            document.body.innerHTML = `<h1 style="color:white; text-align:center; margin-top:100px;">المنتج غير موجود</h1>`;
+            window.location.href = "index.html";
+            return;
         }
-    } catch (error) {
-        console.error("Error:", error);
-        document.getElementById('loading-screen').style.display = 'none';
-        alert("حدث خطأ أثناء تحميل البيانات.");
-    }
-});
+
+        try {
+            // طلب البيانات بناءً على المصدر (projects أو offers)
+            const response = await fetch(`${GAS_URL}?action=list&type=${source}`);
+            const data = await response.json();
+            const item = data.find(p => String(p.id) === String(productId));
+
+            if (item) {
+                renderProductDetails(item);
+                
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    document.body.classList.remove('loading-active');
+                }, 500);
+            } else {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.body.innerHTML = `<h1 style="color:white; text-align:center; margin-top:100px;">المنتج غير موجود في قسم ${source}</h1>`;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            document.getElementById('loading-screen').style.display = 'none';
+            alert("حدث خطأ أثناء تحميل البيانات.");
+        }
+    });
 
 function renderProductDetails(item) {
-    // 1. Product-Group (نوع العقار)
-    const groupElement = document.getElementById('productGroup');
-    if (groupElement) groupElement.innerText = item.property_type || "عرض عقاري";
+    // 1. العنوان والنوع
+    document.getElementById('productGroup').innerText = item.property_type || "عرض خاص";
+    document.getElementById('productTitle').innerText = item.title || "بدون عنوان";
 
-    // 2. Product-Title (العنوان)
-    const titleElement = document.getElementById('productTitle');
-    if (titleElement) titleElement.innerText = item.title || "بدون عنوان";
-
-    // 3. Product-Price (السعر)
+    // 2. معالجة السعر والخصم (تعديل رقم 2 المطلوب)
     const priceElement = document.getElementById('productPrice');
-    if (priceElement) priceElement.innerText = `${item.price || 0} ج.م`;
+    const badgeElement = document.getElementById('discountBadge');
+    
+    // ملاحظة: العروض بتستخدم base_price والمشاريع بتستخدم price
+    const originalPrice = item.base_price || item.price || 0;
 
-    // 4. متاح (نعم / لأ)
+    if (item.discounted_price && item.discounted_price !== "") {
+        // إذا كان هناك خصم (حالة العروض)
+        priceElement.innerHTML = `
+            <span class="old-price">${originalPrice} ج.م</span>
+            <span class="new-price">${item.discounted_price} ج.م</span>
+        `;
+        // إظهار نسبة الخصم على الصورة (تعديل رقم 1 المطلوب)
+        if (item.discount_percent) {
+            badgeElement.innerText = `خصم ${item.discount_percent}`;
+            badgeElement.style.display = "block";
+        }
+    } else {
+        // سعر عادي (حالة المشاريع)
+        priceElement.innerHTML = `<span class="new-price">${originalPrice} ج.م</span>`;
+        badgeElement.style.display = "none";
+    }
+
+// 4. متاح (نعم / لأ) - تعديل الذكاء للتعامل مع العروض والمشاريع
     const availableSpan = document.getElementById('isAvailable');
-    if (availableSpan) {
+    const availableContainer = availableSpan.parentElement; // الـ <p> اللي شايل الكلمة
+
+    // لو إحنا في جدول العروض، هنخفي السطر ده خالص
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+
+    if (source === 'offers') {
+        availableContainer.style.display = "none"; // إخفاء سطر "متاح: ..."
+    } else {
+        // لو في المشاريع، نطبق المنطق العادي
         const isForSale = String(item.for_sale).toLowerCase();
-        availableSpan.innerText = (isForSale === 'true' || isForSale === '1' || isForSale === 'نعم') ? "نعم" : "لأ";
+        const check = (isForSale === 'true' || isForSale === '1' || isForSale === 'نعم');
+        availableSpan.innerText = check ? "نعم" : "لأ";
+        availableContainer.style.display = "block"; // تأكد إنه ظاهر في المشاريع
     }
 
-    // 5. التواريخ
-    if (document.getElementById('startDate')) document.getElementById('startDate').innerText = item.start_date || "---";
-    if (document.getElementById('endDate')) document.getElementById('endDate').innerText = item.end_date || "---";
+    document.getElementById('startDate').innerText = item.start_date || "---";
+    document.getElementById('endDate').innerText = item.end_date || "---";
+    document.getElementById('displayImage').src = item.main_image || "";
+    document.getElementById('productDescription').innerText = item.description || "لا توجد تفاصيل.";
+    document.getElementById('productStatus').innerText = item.status || "متاح حالياً";
 
-    // 6. صورة المنتج فقط (تم إلغاء تغيير mainImage بناءً على طلبك)
-    if (item.main_image) {
-        const displayImg = document.getElementById('displayImage');
-        if (displayImg) displayImg.src = item.main_image;
-    }
-
-    // 7. التفاصيل (الوصف)
-    if (document.getElementById('productDescription')) {
-        document.getElementById('productDescription').innerText = item.description || "لا توجد تفاصيل إضافية.";
-    }
-
-    // 8. الحالة (Status)
-    if (document.getElementById('productStatus')) {
-        document.getElementById('productStatus').innerText = item.status || "شقق تمليك";
-    }
-
-    // 9. معرض الصور
+    // 4. معرض الصور
     const galleryContainer = document.getElementById('imageGallery');
-    if (galleryContainer) {
-        galleryContainer.innerHTML = ''; 
-        for (let i = 1; i <= 6; i++) {
-            const imgSrc = item[`image${i}`];
-            if (imgSrc && imgSrc.trim() !== "") {
-                const card = `
-                    <div class="image-card">
-                        <img src="${imgSrc}" alt="تفاصيل المنتج ${i}" onclick="window.open('${imgSrc}', '_blank')" style="width:100%; height:200px; object-fit:cover;">
-                    </div>
-                `;
-                galleryContainer.innerHTML += card;
-            }
+    galleryContainer.innerHTML = ''; 
+    for (let i = 1; i <= 6; i++) {
+        const imgSrc = item[`image${i}`];
+        if (imgSrc && imgSrc.trim() !== "") {
+            galleryContainer.innerHTML += `
+                <div class="image-card">
+                    <img src="${imgSrc}" onclick="window.open('${imgSrc}', '_blank')">
+                </div>`;
         }
     }
 }
