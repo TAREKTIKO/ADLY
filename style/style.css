@@ -373,6 +373,28 @@ header{
     display: none; /* Chrome, Safari */
 }
 
+
+/* شارة الخصم */
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* فوق على الشمال */
+    background-color: var(--luxury-gold);
+    color: var(--text-white);
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 5;
+    font-family: var(--secondary-font);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    border: 1px solid var(--text-white);
+}
+
+/* لضمان أن الكارت هو المرجع لمكان الشارة */
+.service-box.offer-box {
+    position: relative; 
+}
 /* /////////////////////////////////////////////////////////////////////// */
 /* contact-us-content */
 /* /////////////////////////////////////////////////////////////////////// */
